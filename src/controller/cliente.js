@@ -10,8 +10,17 @@ exports.getCriar = async (req, res, next) => {
 
 exports.postCriar = async (req, res, next) => {
     try {
-        const cliente = await Cliente.criar(req.body)
-        return res.json(cliente)
+        let resultado = await Cliente.validarRegistro(req.body)
+        if(!resultado) { // se não encontrar cliente..
+            cliente = await Cliente.criar(req.body)
+            return res.json(cliente)
+        } else {
+            return res.json(
+                {
+                    error: 'Cliente já foi registrado!'
+                }
+            )
+        }
     } catch (err) {
         next(err)
     }
