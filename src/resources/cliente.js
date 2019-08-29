@@ -26,7 +26,9 @@ class Cliente {
     }
 
     static async validarRegistro(dados) {
-        let 
+        let { email} = dados
+        let cliente = await modelo.findOne({ email })
+        return cliente
     }
 }
 
